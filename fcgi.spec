@@ -4,7 +4,7 @@
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	BSD-style
 Group:		System/Servers
 URL:		http://www.fastcgi.com/
@@ -80,7 +80,7 @@ libtoolize --copy --force; aclocal-1.7; autoconf; automake-1.7 --add-missing --c
     --with-noassert \
     --with-notest
 
-%make
+make
 				
 %install
 [ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
@@ -109,10 +109,6 @@ popd
 %post -n %{libname} -p /sbin/ldconfig
 
 %postun -n %{libname} -p /sbin/ldconfig
-
-%post -n %{libname}-devel -p /sbin/ldconfig
-
-%postun -n %{libname}-devel -p /sbin/ldconfig
 
 %files
 %defattr(0644,root,root,0755)
