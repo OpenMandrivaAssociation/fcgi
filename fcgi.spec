@@ -15,6 +15,7 @@ BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
 Requires:	%{libname} = %{version}
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 FastCGI is an open extension to CGI that provides high performance
