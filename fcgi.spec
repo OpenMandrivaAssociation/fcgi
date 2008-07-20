@@ -4,7 +4,7 @@
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
-Release:	%mkrel 9
+Release:	%mkrel 10
 License:	BSD-style
 Group:		System/Servers
 URL:		http://www.fastcgi.com/
@@ -15,7 +15,7 @@ BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
 Requires:	%{libname} = %{version}
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 FastCGI is an open extension to CGI that provides high performance
@@ -83,7 +83,7 @@ libtoolize --copy --force; aclocal-1.7; autoconf; automake-1.7 --add-missing --c
 make
 				
 %install
-[ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
@@ -103,9 +103,6 @@ pushd examples/.libs/
     install -m755 threaded %{buildroot}/var/www/fcgi-bin/
 popd
 
-%clean
-[ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
-
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
 %endif
@@ -113,6 +110,9 @@ popd
 %if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
 %endif
+
+%clean
+rm -rf %{buildroot}
 
 %files
 %defattr(0644,root,root,0755)
