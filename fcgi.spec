@@ -4,7 +4,7 @@
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
-Release:	%mkrel 11
+Release:	%mkrel 12
 License:	BSD-style
 Group:		System/Servers
 URL:		http://www.fastcgi.com/
@@ -12,7 +12,7 @@ Source0:	%{name}-%{version}.tar.bz2
 Patch0:		fcgi-no-libs.patch.bz2
 BuildRequires:	libstdc++-devel
 BuildRequires:	autoconf2.5
-BuildRequires:	automake1.7
+BuildRequires:	automake
 BuildRequires:	libtool
 Requires:	%{libname} = %{version}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -72,7 +72,7 @@ This package contains static libraries of %{name}.
 %build
 touch INSTALL NEWS AUTHORS ChangeLog COPYING
 rm -f configure
-libtoolize --copy --force; aclocal-1.7; autoconf; automake-1.7 --add-missing --copy
+libtoolize --copy --force; aclocal; autoconf; automake --add-missing --copy
 
 %configure2_5x \
     --with-global \
