@@ -4,12 +4,13 @@
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
-Release:	%mkrel 12
+Release:	%mkrel 13
 License:	BSD-style
 Group:		System/Servers
 URL:		http://www.fastcgi.com/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		fcgi-no-libs.patch.bz2
+Patch1:		fcgi-2.4.0-header.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	autoconf2.5
 BuildRequires:	automake
@@ -67,7 +68,8 @@ This package contains static libraries of %{name}.
 %prep
 
 %setup -q
-%patch -p1
+#%patch0 -p1
+%patch1 -p1
 
 %build
 touch INSTALL NEWS AUTHORS ChangeLog COPYING
