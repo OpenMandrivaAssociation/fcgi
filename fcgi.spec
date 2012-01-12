@@ -4,19 +4,19 @@
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
-Release:	%mkrel 13
+Release:	14
 License:	BSD-style
 Group:		System/Servers
 URL:		http://www.fastcgi.com/
 Source0:	%{name}-%{version}.tar.bz2
-Patch0:		fcgi-no-libs.patch.bz2
-Patch1:		fcgi-2.4.0-header.patch
+Patch0:		fcgi-no-libs.patch
+Patch1:		FastCGI-clientdata_pointer.patch
+Patch2:		FastCGI-makefile.am_cppflags.patch
+Patch3:		fastcgi-2.4.0_missing_call_to_fclose.patch
+Patch4:		FastCGI-2.4.0-CVE-2011-2766.diff
 BuildRequires:	libstdc++-devel
-BuildRequires:	autoconf2.5
-BuildRequires:	automake
-BuildRequires:	libtool
-Requires:	%{libname} = %{version}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	autoconf automake libtool
+Requires:	%{libname} >= %{version}
 
 %description
 FastCGI is an open extension to CGI that provides high performance
@@ -38,7 +38,7 @@ developed using FastCGI Developer's Kit and cgi-fcgi (bridge from
 CGI to FastCGI).
 
 %package -n	%{libname}
-Summary:	Libraries for %{name} 
+Summary:	Libraries for %{name}
 Group:          System/Libraries
 
 %description -n	%{libname}
@@ -47,7 +47,7 @@ This package contains the %{name} library files.
 %package -n	%{libname}-devel
 Summary:	Development headers and libraries for %{name}
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} >= %{version}
 Provides:	libfcgi-devel = %{version}
 Obsoletes:	libfcgi-devel
 
@@ -57,19 +57,14 @@ to make developing FastCGI applications easy. The kit currently
 supports FastCGI applications written in C/C++, Perl, Tcl, and
 Java.
 
-%package -n	%{libname}-static-devel
-Summary:	Development static libraries for %{name}
-Group:		Development/C
-Requires:	%{libname}-devel = %{version}
-
-%description -n	%{libname}-static-devel
-This package contains static libraries of %{name}.
-
 %prep
 
 %setup -q
-#%patch0 -p1
-%patch1 -p1
+%patch0 -p1
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
+%patch4 -p0
 
 %build
 touch INSTALL NEWS AUTHORS ChangeLog COPYING
@@ -83,7 +78,7 @@ libtoolize --copy --force; aclocal; autoconf; automake --add-missing --copy
     --with-notest
 
 make
-				
+
 %install
 rm -rf %{buildroot}
 
@@ -105,19 +100,10 @@ pushd examples/.libs/
     install -m755 threaded %{buildroot}/var/www/fcgi-bin/
 popd
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
+# cleanup
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files
-%defattr(0644,root,root,0755)
 %doc doc/*.1 LICENSE.TERMS README
 %attr(0755,root,root) %{_bindir}/cgi-fcgi
 %attr(0755,root,root) /var/www/fcgi-bin/authorizer
@@ -129,21 +115,12 @@ rm -rf %{buildroot}
 %attr(0755,root,root) /var/www/fcgi-bin/threaded
 
 %files -n %{libname}
-%defattr(0644,root,root,0755)
-%attr(0755,root,root) %{_libdir}/libfcgi++.so.0*
-%attr(0755,root,root) %{_libdir}/libfcgi.so.0*
+%attr(0755,root,root) %{_libdir}/libfcgi++.so.%{major}*
+%attr(0755,root,root) %{_libdir}/libfcgi.so.%{major}*
 
 %files -n %{libname}-devel
-%defattr(0644,root,root,0755)
 %doc doc/*.htm* doc/*.gif doc/fastcgi-* doc/*.3
 %attr(0755,root,root) %{_libdir}/libfcgi++.so
 %attr(0755,root,root) %{_libdir}/libfcgi.so
-%attr(0755,root,root) %{_libdir}/libfcgi++.la
-%attr(0755,root,root) %{_libdir}/libfcgi.la
 %{_includedir}/*.h
 %{_datadir}/fastcgi/*
-
-%files -n %{libname}-static-devel
-%defattr(0644,root,root,0755)
-%{_libdir}/libfcgi++.a
-%{_libdir}/libfcgi.a
