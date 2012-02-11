@@ -14,6 +14,7 @@ Patch1:		FastCGI-clientdata_pointer.patch
 Patch2:		FastCGI-makefile.am_cppflags.patch
 Patch3:		fastcgi-2.4.0_missing_call_to_fclose.patch
 Patch4:		FastCGI-2.4.0-CVE-2011-2766.diff
+Patch5:		fcgi-2.4.0-gcc4.4.diff
 BuildRequires:	libstdc++-devel
 BuildRequires:	autoconf automake libtool
 Requires:	%{libname} >= %{version}
@@ -65,6 +66,7 @@ Java.
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
+%patch5 -p0
 
 %build
 touch INSTALL NEWS AUTHORS ChangeLog COPYING
