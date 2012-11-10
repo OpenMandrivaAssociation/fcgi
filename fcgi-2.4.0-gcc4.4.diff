@@ -1,0 +1,10 @@
+--- libfcgi/fcgio.cpp	2002-02-24 21:12:22.000000000 +0100
++++ libfcgi/fcgio.cpp.oden	2012-02-11 19:00:46.850182544 +0100
+@@ -22,6 +22,7 @@
+ #define DLLAPI  __declspec(dllexport)
+ #endif
+ 
++#include <cstdio>
+ #include <limits.h>
+ #include "fcgio.h"
+ 
