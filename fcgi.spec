@@ -126,3 +126,68 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %attr(0755,root,root) %{_libdir}/libfcgi.so
 %{_includedir}/*.h
 %{_datadir}/fastcgi/*
+
+
+%changelog
+* Sat Feb 11 2012 Oden Eriksson <oeriksson@mandriva.com> 2.4.0-14
++ Revision: 773326
+- fix build
+- sync with MDVSA-2012:001
+- various fixes
+
+* Tue Dec 06 2011 Yuri Myasoedov <omerta13@mandriva.org> 2.4.0-13
++ Revision: 738408
+- Added patch fixing building issue
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - don't force the usage of automake1.7
+
+* Tue Jul 22 2008 Thierry Vignaud <tv@mandriva.org> 2.4.0-11mdv2009.0
++ Revision: 240692
+- rebuild
+- kill re-definition of %%buildroot on Pixel's request
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+* Sat Jul 07 2007 Oden Eriksson <oeriksson@mandriva.com> 2.4.0-9mdv2008.0
++ Revision: 49448
+- make it build
+- Import fcgi
+
+
+
+* Mon Jun 26 2006 Oden Eriksson <oeriksson@mandriva.com> 2.4.0-8mdv2007.0
+- rebuild
+- fix deps
+
+* Tue May 10 2005 Oden Eriksson <oeriksson@mandrakesoft.com> 2.4.0-7mdk
+- added P0 by PLD
+- make ite compile cleanly on x86_64
+
+* Fri Jun 04 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 2.4.0-6mdk
+- rebuilt against new deps and with gcc v3.4.x
+- fix deps
+
+* Wed Aug 20 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 2.4.0-5mdk
+- put headers in %%{_includedir}/
+
+* Wed Aug 20 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 2.4.0-4mdk
+- use macros
+- use spec file magic to make it compile...
+
+* Sun Apr 13 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 2.4.0-3mdk
+- rebuilt to have rpm v4.2 pick up provides
+
+* Sun Apr 13 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 2.4.0-2mdk
+- argh!!!, license is not GPL but BSD-style (darn templates...)
+- clean up the spec file... (darn templates...)
+
+* Sun Apr 13 2003 Oden Eriksson <oden.eriksson@kvikkjokk.net> 2.4.0-1mdk
+- initial cooker contrib, ripped from PLD, adapted for ML
