@@ -39,10 +39,9 @@ This package contains the %{name} library files.
 %package -n	%{devname}
 Summary:	Development headers and libraries for %{name}
 Group:		Development/C
-Requires:	%{libname} >= %{version}
-Provides:	lib%{name}-devel = %{version}
-Provides:	%{name}-devel = %{version}
-Obsoletes:	%{_lib}fcgi0
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{_lib}fcgi0-devel
 
 %description -n	%{devname}
 This package contains FastCGI Developer's Kit, which is designed
