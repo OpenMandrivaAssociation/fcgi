@@ -5,7 +5,7 @@
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
-Release:	15
+Release:	16
 License:	BSD-style
 Group:		System/Servers
 Url:		http://www.fastcgi.com/
