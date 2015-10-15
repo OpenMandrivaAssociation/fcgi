@@ -2,6 +2,8 @@
 %define libname %mklibname %{name} %{major}
 %define devname %mklibname %{name} -d
 
+%define _disable_rebuild_configure 1
+
 Summary:	The FastCGI development kit
 Name:		fcgi
 Version:	2.4.0
@@ -9,7 +11,7 @@ Release:	24
 License:	BSD-style
 Group:		System/Servers
 Url:		http://www.fastcgi.com/
-Source0:	http://www.fastcgi.com/dist/%{name}-%{version}.tar.gz
+Source0:	http://www.fastcgi.com/dist/%{name}-%{version}.tar.bz2
 Patch0:		fcgi-no-libs.patch
 Patch1:		FastCGI-clientdata_pointer.patch
 Patch2:		FastCGI-makefile.am_cppflags.patch
