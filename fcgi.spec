@@ -1,23 +1,21 @@
 %define major	0
-%define libname %mklibname %{name} %{major}
+%define oldlibname %mklibname %{name} 0
+%define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
 
 %define _disable_rebuild_configure 1
 
 Summary:	The FastCGI development kit
 Name:		fcgi
-Version:	2.4.0
-Release:	26
+Version:	2.4.2
+Release:	1
 License:	BSD-style
 Group:		System/Servers
-Url:		http://www.fastcgi.com/
-Source0:	http://www.fastcgi.com/dist/%{name}-%{version}.tar.bz2
+Url:		https://fastcgi-archives.github.io/
+Source0:	https://github.com/FastCGI-Archives/fcgi2/archive/refs/heads/master.tar.gz
 Patch0:		fcgi-no-libs.patch
 Patch1:		FastCGI-clientdata_pointer.patch
-Patch2:		FastCGI-makefile.am_cppflags.patch
-Patch3:		fastcgi-2.4.0_missing_call_to_fclose.patch
 Patch4:		FastCGI-2.4.0-CVE-2011-2766.diff
-Patch5:		fcgi-2.4.0-gcc4.4.diff
 BuildRequires:	libstdc++-devel
 
 %description
@@ -34,6 +32,7 @@ that supports CGI.
 %package -n	%{libname}
 Summary:	Libraries for %{name}
 Group:          System/Libraries
+%rename %{oldlibname}
 
 %description -n	%{libname}
 This package contains the %{name} library files.
@@ -52,13 +51,7 @@ supports FastCGI applications written in C/C++, Perl, Tcl, and
 Java.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p0
+%autosetup -p1 -n fcgi2-master
 
 sed -i -e 's|AM_CONFIG_HEADER|AC_CONFIG_HEADERS|g' \
 	configure*
@@ -82,28 +75,29 @@ install -d %{buildroot}%{_datadir}/fastcgi
 cp -a examples/{Makefile*,*.c} %{buildroot}%{_datadir}/fastcgi/
 
 # install the built examples (should we require apache here?)
-install -d %{buildroot}/var/www/fcgi-bin
+install -d %{buildroot}/srv/www/fcgi-bin
 
 pushd examples/.libs/
-    install -m755 authorizer %{buildroot}/var/www/fcgi-bin/
-    install -m755 echo %{buildroot}/var/www/fcgi-bin/
-    install -m755 echo-cpp %{buildroot}/var/www/fcgi-bin/
-    install -m755 echo-x %{buildroot}/var/www/fcgi-bin/
-    install -m755 log-dump %{buildroot}/var/www/fcgi-bin/
-    install -m755 size %{buildroot}/var/www/fcgi-bin/
-    install -m755 threaded %{buildroot}/var/www/fcgi-bin/
+    install -m755 authorizer %{buildroot}/srv/www/fcgi-bin/
+    install -m755 echo %{buildroot}/srv/www/fcgi-bin/
+    install -m755 echo-cpp %{buildroot}/srv/www/fcgi-bin/
+    install -m755 echo-x %{buildroot}/srv/www/fcgi-bin/
+    install -m755 log-dump %{buildroot}/srv/www/fcgi-bin/
+    install -m755 size %{buildroot}/srv/www/fcgi-bin/
+    install -m755 threaded %{buildroot}/srv/www/fcgi-bin/
 popd
 
 %files
-%doc doc/*.1 LICENSE.TERMS README
+%doc doc/*.1 LICENSE.TERMS README.md
 %{_bindir}/cgi-fcgi
-/var/www/fcgi-bin/authorizer
-/var/www/fcgi-bin/echo
-/var/www/fcgi-bin/echo-cpp
-/var/www/fcgi-bin/echo-x
-/var/www/fcgi-bin/log-dump
-/var/www/fcgi-bin/size
-/var/www/fcgi-bin/threaded
+/srv/www/fcgi-bin/authorizer
+/srv/www/fcgi-bin/echo
+/srv/www/fcgi-bin/echo-cpp
+/srv/www/fcgi-bin/echo-x
+/srv/www/fcgi-bin/log-dump
+/srv/www/fcgi-bin/size
+/srv/www/fcgi-bin/threaded
+%{_mandir}/man1/cgi-fcgi.1*
 
 %files -n %{libname}
 %{_libdir}/libfcgi++.so.%{major}*
@@ -115,4 +109,6 @@ popd
 %{_libdir}/libfcgi.so
 %{_includedir}/*.h
 %{_datadir}/fastcgi/*
-
+%{_libdir}/pkgconfig/fcgi.pc
+%{_libdir}/pkgconfig/fcgi++.pc
+%{_mandir}/man3/FCGI_*
