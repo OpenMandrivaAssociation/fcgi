@@ -16,6 +16,11 @@ Source0:	https://github.com/FastCGI-Archives/fcgi2/archive/refs/heads/master.tar
 Patch0:		fcgi-no-libs.patch
 Patch1:		FastCGI-clientdata_pointer.patch
 Patch4:		FastCGI-2.4.0-CVE-2011-2766.diff
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	libstdc++-devel
 
 %description
