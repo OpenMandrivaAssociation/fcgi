@@ -7,15 +7,15 @@
 
 Summary:	The FastCGI development kit
 Name:		fcgi
-Version:	2.4.6
+Version:	2.4.7
 Release:	1
 License:	BSD-style
 Group:		System/Servers
 Url:		https://fastcgi-archives.github.io/
 Source0:	https://github.com/FastCGI-Archives/fcgi2/archive/refs/heads/master.tar.gz
-Patch0:		fcgi-no-libs.patch
-Patch1:		FastCGI-clientdata_pointer.patch
-Patch4:		FastCGI-2.4.0-CVE-2011-2766.diff
+# dropped (no longer applies): Patch0:		fcgi-no-libs.patch
+# dropped (no longer applies): Patch1:		FastCGI-clientdata_pointer.patch
+# dropped (no longer applies): Patch4:		FastCGI-2.4.0-CVE-2011-2766.diff
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool-base
